@@ -1,6 +1,12 @@
 #!/usr/bin/python
 #this script is used to resize the img, lung_mask, node_mask
-
+import numpy as np
+from skimage import morphology
+from skimage import measure
+from sklearn.cluster import KMeans
+from skimage.transform import resize
+from glob import glob
+import matplotlib.pyplot as plt
 def resize_lung(img, lung_mask, node_mask):
     # we're scaling back up to the original size of the image
     new_size = [512, 512]
@@ -49,10 +55,6 @@ def resize_lung(img, lung_mask, node_mask):
     new_node_mask = resize(node_mask[min_row:max_row, min_col:max_col], [512, 512])  # 肺结节mask也相应裁剪和resize
     return (new_img, new_lung_mask, new_node_mask)
 
-all_imgs = np.load("./all_arr_imgs.npy")
-all_node_masks = np.load("./all_arr_masks.npy")
-all_lung_masks=np.load("./all_lung_masks.npy")
-
 all_new_imgs=[]
 all_new_node_masks=[]
 all_new_lung_masks=[]
@@ -64,7 +66,7 @@ for count in range(all_imgs.shape[0]):
     if len(np.unique(lung_mask))==2:
         new_img, new_lung_mask, new_node_mask=resize_lung(img,lung_mask,node_mask)
         all_new_imgs.append(new_img)
-        all_lung_masks.append(new_lung_mask)
+        all_new_lung_masks.append(new_lung_mask)
         all_new_node_masks.append(new_node_mask)
 all_new_imgs=np.array(all_new_imgs)
 all_new_lung_masks=np.array(all_new_lung_masks).astype(np.int8)

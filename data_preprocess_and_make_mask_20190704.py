@@ -136,17 +136,17 @@ for mhd_file in path:
     #print(one_mhd_imgs.shape)
     all_label_list.append(label_list)
     if i == 0:
-        all_arr_imgs = one_mhd_imgs
-        all_arr_masks=one_mhd_masks
+        all_imgs = one_mhd_imgs
+        all_node_masks=one_mhd_masks
     else:
-        all_arr_imgs = np.concatenate((all_arr_imgs, one_mhd_imgs), axis=0)
-        all_arr_masks=np.concatenate((all_arr_masks,one_mhd_masks),axis=0)
+        all_imgs = np.concatenate((all_imgs, one_mhd_imgs), axis=0)
+        all_node_masks=np.concatenate((all_node_masks,one_mhd_masks),axis=0)
     
     i = i + 1
 
-all_arr_masks=all_arr_masks.astype(np.int16)
+all_node_masks=all_node_masks.astype(np.int16)
 '''
 #把矩阵保存下来
-np.save("all_arr_imgs.npy",all_arr_imgs)
-np.save("all_arr_masks.npy",all_arr_masks)
+np.save("all_imgs.npy",all_imgs)
+np.save("all_node_masks.npy",all_node_masks)
 '''
